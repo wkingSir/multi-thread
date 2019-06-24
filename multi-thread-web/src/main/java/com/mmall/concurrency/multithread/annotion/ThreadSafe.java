@@ -1,4 +1,4 @@
-package com.baijz.test.annotions;
+package com.mmall.concurrency.multithread.annotion;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
