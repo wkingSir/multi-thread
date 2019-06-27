@@ -1,6 +1,5 @@
-package com.mmall.concurrency.multithread;
+package com.mmall.concurrency.multithread.atomic;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,21 +7,23 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author baijianzhong
- * @ClassName ConcurrencyTest
+ * @ClassName AtomicExample2
  * @Date 2019-06-24 21:26
  * @Description TODO
  **/
 @Slf4j
 @NotThreadSafe
-public class ConcurrencyTest {
+public class AtomicExample6 {
 
     public static int threadTotal = 50;
 
     public static int clientTotal = 5000;
 
+    public static AtomicBoolean flag = new AtomicBoolean(true);
 
     public static int count = 0;
 
@@ -48,6 +49,8 @@ public class ConcurrencyTest {
     }
 
     private static void add() {
-        count++;
+        if(flag.compareAndSet(true,false)) {
+            count++;
+        }
     }
 }
