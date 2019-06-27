@@ -1,4 +1,4 @@
-package com.mmall.concurrency.multithread.publish;
+package com.mmall.concurrency.multithread.example.publish;
 
 import com.mmall.concurrency.multithread.annotion.NotRecommend;
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;

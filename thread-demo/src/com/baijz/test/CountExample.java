@@ -24,7 +24,7 @@ public class CountExample {
     /**
      * 使用AtomicLong类进行控制
      */
-//    private static AtomicLong count = new AtomicLong(0);
+    private static AtomicLong count1 = new AtomicLong(0);
 
     public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -50,7 +50,7 @@ public class CountExample {
      * 加synchronized进行控制操作
      */
     private static synchronized void add(){
-//        count.getAndIncrement() ;
+        count1.getAndIncrement() ;
         count++;
     }
 

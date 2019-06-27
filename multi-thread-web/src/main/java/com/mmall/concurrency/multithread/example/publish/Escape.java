@@ -1,4 +1,4 @@
-package com.mmall.concurrency.multithread.publish;
+package com.mmall.concurrency.multithread.example.publish;
 
 import lombok.extern.slf4j.Slf4j;
 

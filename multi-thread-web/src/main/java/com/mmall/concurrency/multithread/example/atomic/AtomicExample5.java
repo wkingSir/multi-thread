@@ -1,12 +1,10 @@
-package com.mmall.concurrency.multithread.atomic;
+package com.mmall.concurrency.multithread.example.atomic;
 
 import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
  * @author baijianzhong
@@ -21,9 +19,9 @@ public class AtomicExample5 {
     @Getter
     private volatile int count = 100;
 
-    private static AtomicExample5 atomicExample5 = new AtomicExample5();
+    static AtomicExample5 atomicExample5 = new AtomicExample5();
 
-    private static AtomicIntegerFieldUpdater<AtomicExample5> arfu = AtomicIntegerFieldUpdater.newUpdater(AtomicExample5.class, "count");
+    static AtomicIntegerFieldUpdater<AtomicExample5> arfu = AtomicIntegerFieldUpdater.newUpdater(AtomicExample5.class, "count");
 
     public static void main(String[] args) throws Exception{
         if(arfu.compareAndSet(atomicExample5,100,120)){

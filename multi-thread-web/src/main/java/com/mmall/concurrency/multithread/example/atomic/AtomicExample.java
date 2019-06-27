@@ -1,6 +1,5 @@
-package com.mmall.concurrency.multithread.atomic;
+package com.mmall.concurrency.multithread.example.atomic;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
