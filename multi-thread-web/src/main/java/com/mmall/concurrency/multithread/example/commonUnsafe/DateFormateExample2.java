@@ -1,6 +1,6 @@
 package com.mmall.concurrency.multithread.example.commonUnsafe;
 
-import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
+import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.SimpleDateFormat;
@@ -16,10 +16,8 @@ import java.util.concurrent.Semaphore;
  * @Description TODO
  **/
 @Slf4j
-@NotThreadSafe
-public class DateFormateExample1 {
-
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+@ThreadSafe
+public class DateFormateExample2 {
 
     public static int threadTotal = 200;
 
@@ -45,7 +43,8 @@ public class DateFormateExample1 {
         executorService.shutdown();
     }
 
-    private static void update() {
+    private  static void update() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         try {
             simpleDateFormat.parse("20190627");
         } catch (Exception e){

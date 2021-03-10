@@ -1,6 +1,7 @@
 package com.mmall.concurrency.multithread.example.commonUnsafe;
 
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
+import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -15,15 +16,15 @@ import java.util.concurrent.Semaphore;
  * @Description TODO
  **/
 @Slf4j
-@NotThreadSafe
-public class StringExample1 {
+@ThreadSafe
+public class StringExample2 {
 
     public static int threadTotal = 200;
 
     public static int clientTotal = 5000;
 
 
-    public static StringBuilder stringBuilder = new StringBuilder();
+    public static StringBuffer stringBuilder = new StringBuffer();
 
     public static void main(String[] args) throws Exception{
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -33,7 +34,7 @@ public class StringExample1 {
             executorService.execute(() -> {
                 try {
                     semaphore.acquire();
-                    add();
+                    update();
                     semaphore.release();
                 } catch (Exception e) {
                     log.error("exception ", e);
@@ -43,10 +44,10 @@ public class StringExample1 {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info(" length of str : {}" , stringBuilder.length());
+        log.info(" length of strBuffer : {}" , stringBuilder.length());
     }
 
-    private static void add() {
+    private static void update() {
         stringBuilder.append("1");
     }
 }

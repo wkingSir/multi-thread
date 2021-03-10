@@ -7,9 +7,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.StampedLock;
 
 /**
  * @author baijianzhong
@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  **/
 @Slf4j
 @ThreadSafe
-public class LockExample1 {
+public class LockExample3 {
 
     public static int threadTotal = 50;
 
@@ -27,7 +27,7 @@ public class LockExample1 {
 
     public static int count = 0;
 
-    private final static Lock lock = new ReentrantLock();
+    private final static StampedLock lock = new StampedLock();
 
     public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -51,11 +51,11 @@ public class LockExample1 {
     }
 
     private static void add() {
-        lock.lock();
+        long stamp = lock.writeLock();
         try{
             count++;
         }finally {
-            lock.unlock();
+            lock.unlockWrite(stamp);
         }
     }
 }

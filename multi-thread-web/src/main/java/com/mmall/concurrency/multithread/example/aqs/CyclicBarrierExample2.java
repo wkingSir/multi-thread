@@ -2,9 +2,7 @@ package com.mmall.concurrency.multithread.example.aqs;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author baijianzhong
@@ -13,7 +11,7 @@ import java.util.concurrent.Executors;
  * @Description TODO 检测cyclicBarrier运行机制，当线程达到
  **/
 @Slf4j
-public class CyclicBarrierExample1 {
+public class CyclicBarrierExample2 {
 
     private static CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
 
@@ -27,7 +25,7 @@ public class CyclicBarrierExample1 {
             executor.execute(() -> {
                 try {
                     race(threadNum);
-                }catch ( Exception e ){
+                } catch ( Exception e){
                     log.error("{}",e);
                 }
             });
@@ -37,9 +35,18 @@ public class CyclicBarrierExample1 {
 
     }
 
+    /**
+     * 等2s将等待的线程继续执行,这里需注意的是异常捕获
+     * @param threadNum
+     * @throws Exception
+     */
     private static void race(int threadNum) throws Exception{
         log.info("thread {} has ready",threadNum);
-        cyclicBarrier.await();
+        try {
+            cyclicBarrier.await(3000, TimeUnit.MILLISECONDS);
+        } catch ( TimeoutException | BrokenBarrierException e ){
+            log.error("exception {} ",e);
+        }
         log.info("thread {} continue",threadNum);
     }
 

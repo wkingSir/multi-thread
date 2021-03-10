@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
  * @author baijianzhong
  * @ClassName CountDownLatchExample1
  * @Date 2019-06-28 10:19
- * @Description TODO 获取
+ * @Description TODO semaphore.tryAcquire()根据设置的时间执行
  **/
 @Slf4j
-public class SemExample3 {
+public class SemExample4 {
 
     private static int threadCount = 20;
 
@@ -26,7 +26,7 @@ public class SemExample3 {
             final int count  = i;
             executorService.execute(()->{
                 try{
-                    if(semaphore.tryAcquire()){//尝试获取一个许可
+                    if(semaphore.tryAcquire(5000, TimeUnit.MILLISECONDS)){//5s之内的执行
                         test(count);
                         semaphore.release();// 释放一个许可
                     }

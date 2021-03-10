@@ -17,9 +17,9 @@ import java.util.concurrent.*;
  **/
 @Slf4j
 @ThreadSafe
-public class CopyOnWriteSkipListSetExample {
+public class ConcurrentSkipListSetExample {
 
-    private static Set<Integer> list = new CopyOnWriteSkipListSet<Integer>();
+    private static Set<Integer> list = new ConcurrentSkipListSet<Integer>();
 
     public static int threadTotal = 200;
 

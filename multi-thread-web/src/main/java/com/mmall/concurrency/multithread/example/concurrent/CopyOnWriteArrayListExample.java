@@ -1,6 +1,7 @@
 package com.mmall.concurrency.multithread.example.concurrent;
 
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
+import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -11,10 +12,13 @@ import java.util.concurrent.*;
  * @ClassName ArrayListExample1
  * @Date 2019-06-27 18:57
  * @Description TODO
+ *
+ * CopyOnWriteArrayList在并发的环境中适合读操作，写操作也可以保证线程安全
+ *
  **/
 @Slf4j
-@NotThreadSafe
-public class CopOnWriteArrayListExample {
+@ThreadSafe
+public class CopyOnWriteArrayListExample {
 
     private static List<Integer> list = new CopyOnWriteArrayList<>();
 
@@ -41,6 +45,7 @@ public class CopOnWriteArrayListExample {
         }
         countDownLatch.await();
         executorService.shutdown();
+        Thread.sleep(1000);
         log.info("{}",list.size());
     }
 

@@ -11,9 +11,14 @@ import java.util.concurrent.*;
  * @Description TODO 检测cyclicBarrier运行机制，当线程达到
  **/
 @Slf4j
-public class CyclicBarrierExample2 {
+public class CyclicBarrierExample3 {
 
-    private static CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
+    private static CyclicBarrier cyclicBarrier = new CyclicBarrier(5, new Runnable() {
+        @Override
+        public void run() {
+            log.info("first logback bean execute");
+        }
+    });
 
     public static void main(String[] args) throws Exception{
 
@@ -42,13 +47,7 @@ public class CyclicBarrierExample2 {
      */
     private static void race(int threadNum) throws Exception{
         log.info("thread {} has ready",threadNum);
-        try {
-            cyclicBarrier.await(3000, TimeUnit.MILLISECONDS);
-        } catch ( TimeoutException | BrokenBarrierException e ){
-            log.error("exception {} ",e);
-        }
+        cyclicBarrier.await();
         log.info("thread {} continue",threadNum);
     }
-
-
 }

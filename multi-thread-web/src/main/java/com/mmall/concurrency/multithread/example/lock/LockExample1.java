@@ -1,4 +1,4 @@
-package com.mmall.concurrency.multithread.example.atomic;
+package com.mmall.concurrency.multithread.example.lock;
 
 import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author baijianzhong
@@ -17,20 +19,21 @@ import java.util.concurrent.atomic.AtomicInteger;
  **/
 @Slf4j
 @ThreadSafe
-public class AtomicExample2 {
+public class LockExample1 {
 
     public static int threadTotal = 50;
 
     public static int clientTotal = 5000;
 
+    public static int count = 0;
 
-    public static AtomicInteger count = new AtomicInteger(0);
+    private final static Lock lock = new ReentrantLock();
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();
         final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
-        for ( int i = 0; i < clientTotal ; i++) {
+        for (int i = 0; i < clientTotal; i++) {
             executorService.execute(() -> {
                 try {
                     semaphore.acquire();
@@ -44,10 +47,15 @@ public class AtomicExample2 {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info(" count: {}" , count);
+        log.info(" count: {}", count);
     }
 
     private static void add() {
-        count.incrementAndGet();
+        lock.lock();
+        try{
+            count++;
+        }finally {
+            lock.unlock();
+        }
     }
 }

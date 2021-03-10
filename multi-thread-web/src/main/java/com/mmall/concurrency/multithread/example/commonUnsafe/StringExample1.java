@@ -1,4 +1,4 @@
-package com.mmall.concurrency.multithread.example.atomic;
+package com.mmall.concurrency.multithread.example.commonUnsafe;
 
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -10,20 +10,20 @@ import java.util.concurrent.Semaphore;
 
 /**
  * @author baijianzhong
- * @ClassName AtomicExample2
+ * @ClassName
  * @Date 2019-06-24 21:26
  * @Description TODO
  **/
 @Slf4j
 @NotThreadSafe
-public class AtomicExample {
+public class StringExample1 {
 
-    public static int threadTotal = 50;
+    public static int threadTotal = 200;
 
     public static int clientTotal = 5000;
 
 
-    public static int count = 0;
+    public static StringBuilder stringBuilder = new StringBuilder();
 
     public static void main(String[] args) throws Exception{
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -33,7 +33,7 @@ public class AtomicExample {
             executorService.execute(() -> {
                 try {
                     semaphore.acquire();
-                    add();
+                    update();
                     semaphore.release();
                 } catch (Exception e) {
                     log.error("exception ", e);
@@ -43,10 +43,10 @@ public class AtomicExample {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info(" count: {}" , count);
+        log.info(" length of str : {}" , stringBuilder.length());
     }
 
-    private static void add() {
-        count++;
+    private static void update() {
+        stringBuilder.append("1");
     }
 }

@@ -1,10 +1,8 @@
 package com.mmall.concurrency.multithread.example.syncContainer;
 
-import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
@@ -17,44 +15,39 @@ import java.util.concurrent.Semaphore;
  * @ClassName ArrayListExample1
  * @Date 2019-06-27 18:57
  * @Description TODO
+ *
+ * vector类不绝对安全，看方法的调用
+ *
  **/
 @Slf4j
 @ThreadSafe
-public class VectorExample {
+public class VectorExample2 {
 
-    private static List<Integer> list = new Vector<>();
+    private static Vector<Integer> list = new Vector<>();
 
-    public static int threadTotal = 200;
+    public static void main(String[] args) throws Exception {
 
-    public static int clientTotal = 5000;
-
-    public static void main(String[] args) throws Exception{
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        final Semaphore semaphore = new Semaphore(threadTotal);
-        final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
-        for ( int i = 0; i < clientTotal ; i++) {
-            final Integer count = i;
-            executorService.execute(() -> {
-                try {
-                    semaphore.acquire();
-                    add(count);
-                    semaphore.release();
-                } catch (Exception e) {
-                    log.error("exception ", e);
+        while (true) {
+            for (int i = 0; i < 10; i++) {
+                list.add(i);
+            }
+            Thread thread1 = new Thread() {
+                public void run() {
+                    for (int i = 0; i < 10; i++) {
+                        list.remove(i);
+                    }
                 }
-            });
-            countDownLatch.countDown();
+            };
+            Thread thread2 = new Thread() {
+                public void run() {
+                    for (int i = 0; i < 10; i++) {
+                        list.get(i);
+                    }
+                }
+            };
+            thread1.start();
+            thread2.start();
         }
-        countDownLatch.await();
-        executorService.shutdown();
-        log.info("{}",list.size());
     }
 
-    private static void add(Integer i) {
-        try {
-            list.add(i);
-        } catch (Exception e){
-            log.error(" parse Exception {}" , e);
-        }
-    }
 }

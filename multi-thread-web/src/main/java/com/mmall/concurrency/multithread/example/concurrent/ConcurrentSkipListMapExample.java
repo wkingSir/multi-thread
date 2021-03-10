@@ -3,7 +3,6 @@ package com.mmall.concurrency.multithread.example.concurrent;
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -15,9 +14,9 @@ import java.util.concurrent.*;
  **/
 @Slf4j
 @NotThreadSafe
-public class ConcurrentHashMapExample {
+public class ConcurrentSkipListMapExample {
 
-    private static Map<Integer,Integer> map = new ConcurrentHashMap<>();
+    private static Map<Integer,Integer> map = new ConcurrentSkipListMap<>();
 
     public static int threadTotal = 200;
 

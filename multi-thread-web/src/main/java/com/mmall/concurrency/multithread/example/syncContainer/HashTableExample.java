@@ -1,12 +1,10 @@
-package com.mmall.concurrency.multithread.example.commonUnsafe;
+package com.mmall.concurrency.multithread.example.syncContainer;
 
-import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
+import com.mmall.concurrency.multithread.annotion.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,10 +17,10 @@ import java.util.concurrent.Semaphore;
  * @Description TODO
  **/
 @Slf4j
-@NotThreadSafe
-public class HashMapExample1 {
+@ThreadSafe
+public class HashTableExample {
 
-    private static Map<Integer,Integer> map = new HashMap<>();
+    private static Map<Integer,Integer> table = new Hashtable<>();
 
     public static int threadTotal = 200;
 
@@ -47,12 +45,12 @@ public class HashMapExample1 {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info("{}",map.size());
+        log.info("{}",table.size());
     }
 
     private static void add(Integer i) {
         try {
-            map.put(i,i);
+            table.put(i,i);
         } catch (Exception e){
             log.error(" parse Exception {}" , e);
         }

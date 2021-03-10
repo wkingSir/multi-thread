@@ -18,9 +18,9 @@ import java.util.concurrent.*;
  **/
 @Slf4j
 @ThreadSafe
-public class ConcurrentArraySetExample {
+public class CopyOnWriteArraySetExample {
 
-    private static Set<Integer> list = new ConcurrentArraySet<Integer>();
+    private static Set<Integer> list = new CopyOnWriteArraySet<>();
 
     public static int threadTotal = 200;
 

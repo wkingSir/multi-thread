@@ -1,16 +1,11 @@
-package com.mmall.concurrency.multithread.example.commonUnsafe;
+package com.mmall.concurrency.multithread.example.concurrent;
 
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 
 /**
  * @author baijianzhong
@@ -20,9 +15,9 @@ import java.util.concurrent.Semaphore;
  **/
 @Slf4j
 @NotThreadSafe
-public class HashMapExample1 {
+public class ConcurrentHashMapExample {
 
-    private static Map<Integer,Integer> map = new HashMap<>();
+    private static Map<Integer,Integer> map = new ConcurrentHashMap<>();
 
     public static int threadTotal = 200;
 

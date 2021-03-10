@@ -3,9 +3,9 @@ package com.mmall.concurrency.multithread.example.commonUnsafe;
 import com.mmall.concurrency.multithread.annotion.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -20,9 +20,9 @@ import java.util.concurrent.Semaphore;
  **/
 @Slf4j
 @NotThreadSafe
-public class HashSetExample1 {
+public class HashMapExample1 {
 
-    private static Set<Integer> set = new HashSet<>();
+    private static Map<Integer,Integer> map = new HashMap<>();
 
     public static int threadTotal = 200;
 
@@ -47,12 +47,12 @@ public class HashSetExample1 {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info("{}",set.size());
+        log.info("{}",map.size());
     }
 
     private static void add(Integer i) {
         try {
-            set.add(i);
+            map.put(i,i);
         } catch (Exception e){
             log.error(" parse Exception {}" , e);
         }
